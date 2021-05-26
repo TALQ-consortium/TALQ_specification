@@ -1,0 +1,4785 @@
+{
+  "openapi": "3.0.1",
+  "servers": [
+    {
+      "url": "https://talq-consortium.org/v2"
+    }
+  ],
+  "info": {
+    "description": "This is a description of Gateway RESTful API. To provide a bidirectional pipeline, the TALQ architecture implements a HTTP server on both the CMS and on the Gateway side. This Gateway API can be used by the CMS to send requests to the Gateway.",
+    "version": "2.3.0",
+    "title": "TALQ Smart City Gateway API",
+    "contact": {
+      "name": "TALQ Consortium",
+      "email": "info@talq-consortium.org",
+      "url": "http://talq-consortium.org"
+    },
+    "license": {
+      "name": "TALQ RESTFul API 2.0 Licence",
+      "url": "http://talq-consortium.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "services",
+      "description": "Access to services"
+    },
+    {
+      "name": "device-classes",
+      "description": "Access to devices classes"
+    },
+    {
+      "name": "devices",
+      "description": "Access to devices"
+    },
+    {
+      "name": "lamp-types",
+      "description": "Access to lamp types"
+    },
+    {
+      "name": "calendars",
+      "description": "Access to calendars"
+    },
+    {
+      "name": "control-programs",
+      "description": "Access to control programs"
+    },
+    {
+      "name": "assign-commands",
+      "description": "Access to assign commands"
+    },
+    {
+      "name": "override-commands",
+      "description": "Access to override commands"
+    },
+    {
+      "name": "logger-configs",
+      "description": "Access to logger configuration"
+    },
+    {
+      "name": "log-reports",
+      "description": "Access to log reports"
+    },
+    {
+      "name": "groups",
+      "description": "Access to groups"
+    },
+    {
+      "name": "data-packages",
+      "description": "Access to data packages"
+    }
+  ],
+  "paths": {
+    "/services": {
+      "get": {
+        "tags": [
+          "services"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get configuration of all services supported by the gateway",
+        "operationId": "getServices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Service"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/{serviceName}": {
+      "get": {
+        "tags": [
+          "services"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the configuration of a single service",
+        "operationId": "getService",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceName",
+            "in": "path",
+            "description": "The configuration of service to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found service configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Service not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/device-classes": {
+      "get": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get all device classes supported by the gateway",
+        "operationId": "getDeviceClasses",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all device classes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/DeviceClass"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/device-classes/count": {
+      "get": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of device classes",
+        "operationId": "getDeviceClassesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of device classes",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/device-classes/{className}": {
+      "get": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single device class",
+        "operationId": "getDeviceClass",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "className",
+            "in": "path",
+            "description": "The class name of Device to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found Device class",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/DeviceClass"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device class not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the list of all devices, their functions and attributes. Pagination is an optional feature at this operation, and if it is implemented it will be active only when 'offset', 'limit' or both parameters are present, otherwise the whole list of devices must be sent as a response. 'limit' allows the client to set the number of devices returned, while 'offset' specifies the ranking number of the first device on the page, being offset=0 the first device. Pagination requires an implied ordering/indexing, although it is outside TALQ scope and will be the Gateway responsibility. When 'limit' is present but 'offset' is not, the result shall start with the first device of the list. If no 'limit' parameter is provided, but only an 'offset', the Gateway default limit is used. ",
+        "operationId": "getDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceClasses",
+            "in": "query",
+            "description": "Class names to filter by",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of devices to skip before beginning to return the result.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of devices to return.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all devices if pagination is not active or the configured number of devices if it is active.",
+            "headers": {
+              "pagination-offset":{
+                "description": "Number of devices skipped on the complete list",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-defaultLimit":{
+                "description": "Default limit if not specified as query parameter",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-count":{
+                "description": "Number of devices included in the response",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-totalCount":{
+                "description": "Total number of devices present in the server",
+                "schema": {
+                  "type": "integer"
+                }                
+              }
+            },            
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new devices. The CMS can create device addresses, and the Gateway will handle its unicity answering the CMS through HTTP responses. If a Nil UUID is used by the CMS as device address, the Gateway will return the real address inside the response.",
+        "operationId": "addDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The devices are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the CMS might be able to resolve the conflict and resubmit the request. The Gateway SHOULD generate a payload that includes enough information for a CMS to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of devices that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing devices. Replaces the entire existing device definition. For the function array this will mean the existing device functions will be replaced with those specified in this call.",
+        "operationId": "updateDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of devices is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devices not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of device that need to be updated",
+          "required": true
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Partial update of a list of existing devices. Partially updates the existing device definition. For the function array each element passed in will be cross-referenced against items in the existing function array using the id. If they match, the existing function will be updated. If there is no match the function will be added. To remove functions from the array see ‘PUT’, where an empty or reduced function array can be passed in.",
+        "operationId": "partialUpdateDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of device is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devices not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of device that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/devices/count": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of devices",
+        "operationId": "getDevicesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceClasses",
+            "in": "query",
+            "description": "Class names to filter by",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of devices",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceAddress}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single device by TALQ address",
+        "operationId": "getDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Partially updates the existing device definition. For the function array each element passed in will be cross-referenced against items in the existing function array using the id. If they match, the existing function will be updated. If there is no match the function will be added. For each function, only the attributes passed in will be updated in the existing function.",
+        "operationId": "partialUpdateDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+              }
+            }
+          },
+          "description": "The device that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a device",
+        "operationId": "deleteDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceAddress}/{functionId}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single Function of a device",
+        "operationId": "getDeviceFunction",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attributeScope",
+            "in": "query",
+            "description": "Scope to filter attributes by. Only attributes with matching scopes must be returned, if not specified all attributes are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found device Function",
+            "content": {
+              "application/json": 
+              {
+                "schema":{
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Function"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device or Function not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Partial update a list of attributes from a function, only the attributes passed in will be updated.",
+        "operationId": "partialUpdateFunction",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The function is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Function not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Function"
+              }
+            }
+          },
+          "description": "The list of attributes that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/devices/{deviceAddress}/{functionId}/{attributeName}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single attribute of a device function",
+        "operationId": "getDeviceAttribute",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "description": "The name of device Attribute",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found attribute of a device function",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Attribute"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device, Function or Attribute not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Partial update an attribute",
+        "operationId": "partialUpdateAttribute",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "description": "The name of device Attribute",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The attribute is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Attribute not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Attribute"
+              }
+            }
+          },
+          "description": "The list of device that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/calendars": {
+      "get": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the list of all calendars",
+        "operationId": "getCalendars",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all calendars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new calendars",
+        "operationId": "addCalendars",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The calendars are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                }
+              }
+            }
+          },
+          "description": "The list of calendars that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing calendars",
+        "operationId": "updateCalendars",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The calendars are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Calendars not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                }
+              }
+            }
+          },
+          "description": "The list of calendars that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/calendars/count": {
+      "get": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of calendars",
+        "operationId": "getCalendarsCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of calendars",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendars/{calendarAddress}": {
+      "get": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single calendar by id",
+        "operationId": "getCalendar",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "calendarAddress",
+            "in": "path",
+            "description": "identifier of calendar to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found calendar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Calendar not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single calendar by id",
+        "operationId": "updateCalendar",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "calendarAddress",
+            "in": "path",
+            "description": "identifier of calendar to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The calendar is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Calendar not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+              }
+            }
+          },
+          "description": "The calendar that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "calendars"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single calendar",
+        "operationId": "deleteCalendar",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "calendarAddress",
+            "in": "path",
+            "description": "identifier of calendar to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The calendar is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Calendar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Calendar not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/control-programs": {
+      "get": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the list of all control programs",
+        "operationId": "getControlPrograms",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all control programs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new control programs",
+        "operationId": "addControlPrograms",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The control programs are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                }
+              }
+            }
+          },
+          "description": "The list of control programs that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing control programs",
+        "operationId": "updateControlPrograms",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The control programs are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Control programs not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                }
+              }
+            }
+          },
+          "description": "The list of control programs that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/control-programs/count": {
+      "get": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of control programs",
+        "operationId": "getControlProgramsCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of control programs",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/control-programs/{controlProgramAddress}": {
+      "get": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single control program by id",
+        "operationId": "getControlProgram",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controlProgramAddress",
+            "in": "path",
+            "description": "identifier of control program to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found control program",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Control program not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single control program by id",
+        "operationId": "updateControlProgram",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controlProgramAddress",
+            "in": "path",
+            "description": "identifier of control program to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The control program is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Control program not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+              }
+            }
+          },
+          "description": "The control program that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "control-programs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single control program",
+        "operationId": "deleteControlProgram",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controlProgramAddress",
+            "in": "path",
+            "description": "identifier of control program to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The control program is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ControlProgram"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Control program not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assign-commands": {
+      "post": {
+        "tags": [
+          "assign-commands"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Send a command to assign an entity to a list of TALQ addresses, for instance a Calendar to a list of lamp actuators. Asynchronous and synchronous behaviours are supported. When an asynchronous response is returned (202-Accepted), the assignment is considered being processed and the Gateway shall send a PATCH request, or several, sometime in the future. The PATCH request(s) from the Gateway will include the list of all the affected devices.",
+        "operationId": "assignCommand",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The command is assigned."
+          },
+          "202": {
+            "description": "The command is received, but the assignment is not done yet."
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/AssignCommand"
+              }
+            }
+          },
+          "description": "The command to assign",
+          "required": true
+        }
+      }
+    },
+    "/override-commands": {
+      "post": {
+        "tags": [
+          "override-commands"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Send an override command",
+        "operationId": "sendCommand",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The override command is successfully received"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/OverrideCommand"
+              }
+            }
+          },
+          "description": "The override command to send",
+          "required": true
+        }
+      }
+    },
+    "/logger-configs": {
+      "post": {
+        "tags": [
+          "logger-configs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Send an logger configuration",
+        "operationId": "addLoggerConfig",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The logger configuration is successfully received"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LoggerConfig"
+              }
+            }
+          },
+          "description": "The logger configuration to send",
+          "required": true
+        }
+      }
+    },
+    "/logger-configs/{loggerAddress}": {
+      "get": {
+        "tags": [
+          "logger-configs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the configuration of a logger",
+        "operationId": "getLoggerConfig",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "loggerAddress",
+            "in": "path",
+            "description": "The identifier of logger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The configuration of logger",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LoggerConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Logger not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "logger-configs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update an logger configuration",
+        "operationId": "updateLoggerConfig",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "loggerAddress",
+            "description": "The address of logger to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The logger configuration is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Logger configuration not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }          
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LoggerConfig"
+              }
+            }
+          },
+          "description": "The logger configuration to update",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "logger-configs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a logger configuration",
+        "operationId": "deleteLoggerConfig",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "loggerAddress",
+            "in": "path",
+            "description": "The address of logger to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The logger configuration is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LoggerConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Logger configuration not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/log-reports/count": {
+      "get": {
+        "tags": [
+          "log-reports"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of log reports",
+        "operationId": "getLogReportsCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of log reports",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/log-reports/{loggerAddress}": {
+      "get": {
+        "tags": [
+          "log-reports"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a log report. The Gateway shall report back to the CMS the content of the data logger in a logReport message. The content of the report message depends on the data logger reporting mode configuration: In case of a data logger with periodic recording mode the Gateway shall first add a snapshot of the data specified in the recording profiles as soon as possible after receiving the request, and then send this information snapshot to the CMS. Other not yet reported entries within the data logger may also be included; In case of a data logger with event recording mode the Gateway shall send not yet reported event logs to the CMS.",
+        "operationId": "getLogReport",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "loggerAddress",
+            "in": "path",
+            "description": "The address of data logger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The log report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LogReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Data logger not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get the list of groups",
+        "operationId": "getGroups",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Add a list of new groups",
+        "operationId": "addGroups",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The groups are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "description": "The list of groups that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Update a list of existing groups",
+        "operationId": "updateGroups",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The groups are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Groups not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "description": "The list of groups that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/groups/count": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get the count of groups",
+        "operationId": "getGroupsCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of groups",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups/{groupAddress}": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get a single group",
+        "operationId": "getGroup",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },    
+      "put": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Update a single group by id",
+        "operationId": "updateGroup",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The group is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+              }
+            }
+          },
+          "description": "The group that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Delete a single group",
+        "operationId": "deleteGroup",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The group is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups/{groupAddress}/members": {
+      "put": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Add one or more members to a group",
+        "operationId": "addGroupMembers",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The group is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ResourceReference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ResourceReference"
+                }
+              }
+            }
+          },
+          "description": "The references of members that need to be added in a group",
+          "required": true
+        }
+      }
+    },
+    "/groups/{groupAddress}/members/count": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get the count of group's members",
+        "operationId": "getGroupMembersCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of group's members",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups/{groupAddress}/members/{memberResource}/{memberAddress}": {
+      "delete": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Delete a single member of a group",
+        "operationId": "deleteGroupMember",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group whose member has to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberResource",
+            "in": "path",
+            "description": "The resource part of the reference to the member to delete. It can be 'groups' or 'devices'",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "memberAddress",
+            "in": "path",
+            "description": "The address of member to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The member is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/ResourceReference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group or member not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lamp-types": {
+      "post": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Add a list of new lamp types",
+        "operationId": "addLampTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The lamp types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "description": "The list of lamp types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Update a list of existing lamp types",
+        "operationId": "updateLampTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "description": "The list of lamp types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/lamp-types/count": {
+      "get": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get the count of lamp types",
+        "operationId": "getLampTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of lamp types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lamp-types/{lampTypeAddress}": {
+      "get": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get a single lampType by address",
+        "operationId": "getLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lampType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found lampType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LampType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Update a single lamp type by id",
+        "operationId": "updateLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lamp type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+              }
+            }
+          },
+          "description": "The lamp type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Delete a single lamp type",
+        "operationId": "deleteLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lamp tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data-packages": {
+      "get": {
+        "tags": [
+          "data-packages"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Get the list of installed data packages",
+        "operationId": "getDataPackages",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of installed data packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/DataPackage"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "data-packages"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            }
+          }
+        ],
+        "description": "Upgrade a list of data packages",
+        "operationId": "upgradeDataPackages",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of CMS",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The data packages are upgraded"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Data packages not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-3-0.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-3-0.json#/components/schemas/DataPackage"
+                }
+              }
+            }
+          },
+          "description": "The data packages that need to be upgraded",
+          "required": true
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about TALQ Consortium",
+    "url": "http://talq-consortium.org"
+  }
+}
