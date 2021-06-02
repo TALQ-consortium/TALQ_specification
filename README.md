@@ -44,8 +44,6 @@ All the released versions of the TALQ Specification are in the table below:
 
 Please contact the TALQ Consortium through the [contact form](https://www.talq-consortium.org/4-contact/).
 
-Please send your questions to [enquiries_github@talq-consortium.org](mailto:enquiries_github@talq-consortium.org) [**Do we want this?????**]
-
 # Release notes
 
 ## 2.3.0
