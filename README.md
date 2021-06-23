@@ -17,8 +17,8 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 The TALQ Specification is splitted in three files, named with the [Semantic versioning](#semantic-versioning):
 
 - [Data model OAS file](oas/talq-data-model-2-3-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): This file defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): This file defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
