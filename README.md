@@ -2,25 +2,23 @@
 
 # TALQ - The Smart City Protocol
 
-The [TALQ Consortium](https://www.talq-consortium.org/) aims to define a globally accepted smart city protocol for central management software to configure, control, command and monitor heterogeneous smart city device networks.
+The [TALQ Consortium](https://www.talq-consortium.org/) has developed the Smart City Protocol, a globally accepted interface standard for smart city device networks. This software protocol is a specification for information exchange, suitable for implementation in various products and systems. In this way interoperability between Central Management Software (CMS) and Outdoor Device Networks (ODN) from different vendors is enabled, such that a single CMS can control different ODNs in different parts of a city or region.
 
-TALQ provides answers to the main challenges of building really smart cities including increasing safety and comfort for inhabitants,  reducing energy consumption and CO2 emissions worldwide, raising cost efficiency for operators managing a smart city.
+TALQ provides answers to the main challenges of building really smart cities including increasing safety and comfort for inhabitants, reducing energy consumption and CO<sub>2</sub> emissions worldwide, raising cost efficiency for operators managing a smart city.
 
-Founded originally by lighting industry leaders, TALQ is open to new industry members from the entire smart city environment. Stakeholder partners, such as cities, municipalities, utilities, consultants, and others can also join our Partner program.
-Let’s TALQ !
+Driven originally by smart street lighting vendors, TALQ is now an open industry consortium addressing the entire smart city environment allowing manufacturers of smart city applications to join as members and certify their products as TALQ-compliant. Other stakeholders such as cities, municipalities, utilities, consultants, universities and many others can join the consortium as Partners Let’s TALQ !
 
-[TO BE COMPLETED BY PWG] 
 
 # TALQ 2: A RESTful API
 
 
-The TALQ protocol has been defined with the [OpenAPI Specification (OAS), formerly Swagger](https://github.com/OAI/OpenAPI-Specification),  the standard de facto for defining RESTful APIs. An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases. Thus the TALQ members can dramatically improve the development process. 
+The TALQ protocol has been defined with the [OpenAPI Specification (OAS), formerly Swagger](https://github.com/OAI/OpenAPI-Specification), the standard de facto for defining RESTful APIs. An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases. Thanks to this specification manufacturers can dramatically shorten the development times and increase code quality when aiming to become interoperable.
 
 The TALQ Specification is splitted in three files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Data model OAS file](oas/talq-data-model-2-3-0.json): defines all the TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Data model OAS file](oas/talq-data-model-2-3-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): This file defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): This file defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -40,9 +38,11 @@ All the released versions of the TALQ Specification are in the table below:
 | [oas/talq-api-gateway-2-1-1.json](old-version.md)                   | 2.1.1         | 2019/10/01  |
 | [oas/talq-api-cms-2-1-1.json](old-version.md)                       | 2.1.1         | 2019/10/01  |
 
-# How to contact TALQ
+# How to get in touch with TALQ
 
-Please contact the TALQ Consortium through the [contact form](https://www.talq-consortium.org/4-contact/).
+Feel free to contact TALQ via the website [contact form](https://www.talq-consortium.org/4-contact/).
+
+To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
 
