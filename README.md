@@ -14,8 +14,9 @@ Driven originally by smart street lighting vendors, TALQ is now an open industry
 
 The TALQ protocol has been defined with the [OpenAPI Specification (OAS), formerly Swagger](https://github.com/OAI/OpenAPI-Specification), the standard de facto for defining RESTful APIs. An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases. Thanks to this specification manufacturers can dramatically shorten the development times and increase code quality when aiming to become interoperable.
 
-The TALQ Specification is splitted in three files, named with the [Semantic versioning](#semantic-versioning):
+The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
+- [Approved TALQ Specification](20210301-Approved-TALQ-Specification-Version-2.3.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
 - [Data model OAS file](oas/talq-data-model-2-3-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
 - [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
 - [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
