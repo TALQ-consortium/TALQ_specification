@@ -16,24 +16,28 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20210301-Approved-TALQ-Specification-Version-2.3.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-3-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-3-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-3-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20211215-Approved-TALQ-Specification-Version-2.4.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-4-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-4-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-4-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
 All the released versions of the TALQ Specification are in the table below: 
 
-| Name                                                                | Version         | Date        | 
-| ------------------------------------------------------------------- | --------------- | ----------- |
+| Name                                                                | Version       | Date        | 
+| ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-4-0.json](oas/talq-data-model-2-4-0.json)    | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-gateway-2-4-0.json](oas/talq-api-gateway-2-4-0.json)  | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-cms-2-4-0.json](oas/talq-api-cms-2-4-0.json)          | [2.4.0](#240) | 2021/12/15  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-3-0.json](oas/talq-data-model-2-3-0.json)    | [2.3.0](#230) | 2021/03/01  |
 | [oas/talq-api-gateway-2-3-0.json](oas/talq-api-gateway-2-3-0.json)  | [2.3.0](#230) | 2021/03/01  |
 | [oas/talq-api-cms-2-3-0.json](oas/talq-api-cms-2-3-0.json)          | [2.3.0](#230) | 2021/03/01  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-2-0.json](oas/talq-data-model-2-2-0.json)    | [2.2.0](#220) | 2020/04/01  |
-| [oas/talq-api-gateway-2-2-0.json](oas/talq-api-gateway-2-2-0.json)  | [2.2.0](#220) | 2020/04/01  |
-| [oas/talq-api-cms-2-2-0.json](oas/talq-api-cms-2-2-0.json)          | [2.2.0](#220) | 2020/04/01  |
+| [oas/talq-data-model-2-2-0.json](old-version.md)                    | [2.2.0](#220) | 2020/04/01  |
+| [oas/talq-api-gateway-2-2-0.json](old-version.md)                   | [2.2.0](#220) | 2020/04/01  |
+| [oas/talq-api-cms-2-2-0.json](old-version.md)                       | [2.2.0](#220) | 2020/04/01  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-1-1.json](old-version.md)                    | 2.1.1         | 2019/10/01  |
 | [oas/talq-api-gateway-2-1-1.json](old-version.md)                   | 2.1.1         | 2019/10/01  |
@@ -46,6 +50,46 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.4.0
+
+### Data model
+
+- `GenericActuator.feedbackCommand` and `LampActuatorActuator.feedbackLightCommand` descriptions improved.
+- New `SimpleActuatorFunction` added: A function that allows the new profiles to use actuators without the complexity of calendars.
+- New `TimeFunction` added, deprecating the related attributes at `BasicFunction`
+- New attributes added to `BasicFunction`: `commandConfirmation`, `reboot`, `factoryReset`, `configurationReset` and `operatingHours`. 
+- Deprecated temperature related attributes from functions `LampMonitor`, `SolarBatterySensor` and `BatteryManagementSystem`. The attributes shall be replaced by the `TemperatureSensorFunction`.
+- New attributes added to `TemperatureSensorFunction`: `applicationType`, `minMeasuredTemperature`, `maxMeasuredTemperature` and `measuredTemperatureSince`.
+- New attributes added to `LocationSensorFunction`: `uncertainty`, `compassDirection`, `velocity`, `speed` and `applicationType`. The `velocity` attribute's type is AttributeVelocity which contains several velocity componentes such as horizontal speed, bearing, vertical speed, direction and velocity uncertainty.
+- New `applicationType` attribute added to all functions except those that can only be instantiated once in a device: `Basic`, `Gateway` and `Time`.
+- All `xxxSince` attributes' descriptions have been clarified.
+- Added `smartParking` and `smartTraffic` profiles to all functions, attributes and services. 
+- Added `supplyLoss` to `ElectricalMeter` function.
+- New `SegmentMonitorFunction` added, deprecating `BasicFunction.cabinetDoorOpen` attribute.
+- New `NoiseMonitoringSensorFunction` added.
+- New `AtmosphericSensorFunction` added.
+- New `WindSensorFunction` added.
+- New `PrecipitationSensorFunction` added.
+- New `SkySensorFunction` added.
+- New `GullySensorFunction` added.
+- New `WaterFlowSensorFunction` added.
+- New `WaterQualitySensorFunction` added.
+- `ParticulateMatterSensorFunction` extended with 24 h averages.
+- `GasSensorFunction` extended with 1h and 8h averages.
+- `TrafficCounterFunction` extended with averages, min, max and traffic direction.
+- New `TextDisplayActuatorFunction` added.
+- New `ParkingSensorFunction` added.
+- New `ParkingCameraSensorFunction` added.
+- Clarification added to `Attribute.timestamp`: the attribute timestamp is a key protocol data and so a mandatory requirement to certify a product (mainly a GW).
+
+### API for CMS:
+
+None
+
+### API for Gateway
+
+None
 
 ## 2.3.0
 
