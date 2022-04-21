@@ -16,10 +16,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20211215-Approved-TALQ-Specification-Version-2.4.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-4-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-4-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-4-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20220408-Approved-TALQ-Specification-Version-2.4.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-4-1.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-4-1.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-4-1.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -27,6 +27,10 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-4-1.json](oas/talq-data-model-2-4-1.json)    | [2.4.1](#241) | 2022/04/08  |
+| [oas/talq-api-gateway-2-4-1.json](oas/talq-api-gateway-2-4-1.json)  | [2.4.1](#241) | 2022/04/08  |
+| [oas/talq-api-cms-2-4-1.json](oas/talq-api-cms-2-4-1.json)          | [2.4.1](#241) | 2022/04/08  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-4-0.json](oas/talq-data-model-2-4-0.json)    | [2.4.0](#240) | 2021/12/15  |
 | [oas/talq-api-gateway-2-4-0.json](oas/talq-api-gateway-2-4-0.json)  | [2.4.0](#240) | 2021/12/15  |
 | [oas/talq-api-cms-2-4-0.json](oas/talq-api-cms-2-4-0.json)          | [2.4.0](#240) | 2021/12/15  |
@@ -50,6 +54,26 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.4.1
+
+### Data model
+
+- Clarification added to VendorRecordingMode.content property; difference in content between no value or empty array as value.
+- Clarification for read-only attributes when sent by the CMS. 
+- All `startTime` and `endTime` properties related to entities in a control program must follow the hh:mm:ss format.
+- Clarification added to LoggerConfig.sourceAddresses for different combinations of white and black lists. 
+- VendorAttributeDesc.type enum list completed with new types introduced in 2.4.0
+- The `VendorAttributeDesc` `type` and `scope` properties are made required since the CMS is not able to dynamically create the appropriate UI without this information.
+
+### At API for CMS:
+
+- Added a 409-Conflict status response to the `post` request in `services`, `device-classes`, `devices` and `lamp-types` resources.
+
+
+### At API for Gateway
+
+- Added a 409-Conflict status response to the `post` request in `devices`, `control-programs`, `calendars`, `lamp-types`, `logger-configs`  and `groups` resources.
 
 ## 2.4.0
 
