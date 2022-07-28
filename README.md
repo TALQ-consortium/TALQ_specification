@@ -35,9 +35,9 @@ All the released versions of the TALQ Specification are in the table below:
 | [oas/talq-api-gateway-2-4-0.json](oas/talq-api-gateway-2-4-0.json)  | [2.4.0](#240) | 2021/12/15  |
 | [oas/talq-api-cms-2-4-0.json](oas/talq-api-cms-2-4-0.json)          | [2.4.0](#240) | 2021/12/15  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-3-0.json](oas/talq-data-model-2-3-0.json)    | [2.3.0](#230) | 2021/03/01  |
-| [oas/talq-api-gateway-2-3-0.json](oas/talq-api-gateway-2-3-0.json)  | [2.3.0](#230) | 2021/03/01  |
-| [oas/talq-api-cms-2-3-0.json](oas/talq-api-cms-2-3-0.json)          | [2.3.0](#230) | 2021/03/01  |
+| [oas/talq-data-model-2-3-0.json](old-version.md)                    | [2.3.0](#230) | 2021/03/01  |
+| [oas/talq-api-gateway-2-3-0.json](old-version.md)                   | [2.3.0](#230) | 2021/03/01  |
+| [oas/talq-api-cms-2-3-0.json](oas/old-version.md)                   | [2.3.0](#230) | 2021/03/01  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-2-0.json](old-version.md)                    | [2.2.0](#220) | 2020/04/01  |
 | [oas/talq-api-gateway-2-2-0.json](old-version.md)                   | [2.2.0](#220) | 2020/04/01  |
