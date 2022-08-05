@@ -1,4 +1,5 @@
-![TALQ Consortium](https://www.talq-consortium.org/data/images/1/2/8/logo.png)
+![TALQ Consortium](https://www.talq-consortium.org/data/images/4/8/1/logo_talq.png)
+
 
 # TALQ - The Smart City Protocol
 
