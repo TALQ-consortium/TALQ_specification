@@ -17,10 +17,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20220408-Approved-TALQ-Specification-Version-2.4.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-4-1.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-4-1.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-4-1.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20230105-Approved-TALQ-Specification-Version-2.5.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-5-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-5-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-5-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -28,13 +28,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-5-0.json](oas/talq-data-model-2-5-0.json)    | [2.5.0](#241) | 2023/01/05  |
+| [oas/talq-api-gateway-2-5-0.json](oas/talq-api-gateway-2-5-0.json)  | [2.5.0](#241) | 2023/01/05  |
+| [oas/talq-api-cms-2-5-0.json](oas/talq-api-cms-2-5-0.json)          | [2.5.0](#241) | 2023/01/05  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-4-1.json](oas/talq-data-model-2-4-1.json)    | [2.4.1](#241) | 2022/04/08  |
 | [oas/talq-api-gateway-2-4-1.json](oas/talq-api-gateway-2-4-1.json)  | [2.4.1](#241) | 2022/04/08  |
 | [oas/talq-api-cms-2-4-1.json](oas/talq-api-cms-2-4-1.json)          | [2.4.1](#241) | 2022/04/08  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-4-0.json](oas/talq-data-model-2-4-0.json)    | [2.4.0](#240) | 2021/12/15  |
-| [oas/talq-api-gateway-2-4-0.json](oas/talq-api-gateway-2-4-0.json)  | [2.4.0](#240) | 2021/12/15  |
-| [oas/talq-api-cms-2-4-0.json](oas/talq-api-cms-2-4-0.json)          | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-data-model-2-4-0.json](old-version.md)                    | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-gateway-2-4-0.json](old-version.md)                   | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-cms-2-4-0.json](old-version.md)                       | [2.4.0](#240) | 2021/12/15  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-3-0.json](old-version.md)                    | [2.3.0](#230) | 2021/03/01  |
 | [oas/talq-api-gateway-2-3-0.json](old-version.md)                   | [2.3.0](#230) | 2021/03/01  |
@@ -55,6 +59,97 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.5.0
+
+### Data model
+
+- Added **LuminaireType**
+- Added **BracketType**
+- Added **DriverType**
+- Added **ControllerType**
+- Added **LuminaireAssetFunction**
+- Added **DriverAssetFunction**
+- Added **ControllerAssetFunction**
+- Added `LampMonitor.dimmingFailure` status attribute; Added `dimmingFailure` event type.
+- Fixed `totalReactiveEnergy` and `totalApparentEnergy` attributes descriptions (units were wrong). 
+- Added `x-talq-unit` extension to all attributes with the TALQ Units.
+- `LampType` description improved. 
+- `EventLogData` description added.
+- Added `gatewayRetryPeriod` (deprecating `retryPeriod`), `cmsRetryPeriod`, `gatewayNumberOfRetries` and `cmsNumberOfRetries` attributes in `GatewayFunction`.
+- Fixed descriptions at `ElectricalMeterFunction`'s attributes: `phase1VoltageTooHigh`, `phase1VoltageTooLow`, `phase2VoltageTooHigh`, `phase2VoltageTooLow`, `phase3VoltageTooHigh` and `phase3VoltageTooLow`.
+- Clarified `cmsRefId` description.
+
+### At API for CMS:
+
+- Added resource luminaire-types with methods:
+    + **getLuminaireTypes**: Get the list of all luminaire types
+    + **addLuminaireTypes**: Add a list of new luminaire types
+    + **updateLuminaireTypes**: Update a list of existing luminaire types
+    + **getLuminaireTypesCount**: Get the count of luminaire types
+    + **getLuminaireType**: Get a single luminaireType by address
+    + **updateLuminaireType**: Update a single luminaire type by id
+    + **deleteLuminaireType**: Delete a single luminaire type
+- Added resource bracket-types with methods:
+    + **getLuminaireTypes**: Get the list of all bracket types
+    + **addLuminaireTypes**: Add a list of new bracket types
+    + **updateLuminaireTypes**: Update a list of existing bracket types
+    + **getLuminaireTypesCount**: Get the count of bracket types
+    + **getLuminaireType**: Get a single bracketType by address
+    + **updateLuminaireType**: Update a single bracket type by id
+    + **deleteLuminaireType**: Delete a single bracket type
+- Added resource driver-types with methods:
+    + **getLuminaireTypes**: Get the list of all driver types
+    + **addLuminaireTypes**: Add a list of new driver types
+    + **updateLuminaireTypes**: Update a list of existing driver types
+    + **getLuminaireTypesCount**: Get the count of driver types
+    + **getLuminaireType**: Get a single driverType by address
+    + **updateLuminaireType**: Update a single driver type by id
+    + **deleteLuminaireType**: Delete a single driver type
+- Added resource controller-types with methods:
+    + **getLuminaireTypes**: Get the list of all controller types
+    + **addLuminaireTypes**: Add a list of new controller types
+    + **updateLuminaireTypes**: Update a list of existing controller types
+    + **getLuminaireTypesCount**: Get the count of controller types
+    + **getLuminaireType**: Get a single controllerType by address
+    + **updateLuminaireType**: Update a single controller type by id
+    + **deleteLuminaireType**: Delete a single controller type
+- Clarification added a the `addDeviceClasses` method: device class announcement.
+
+### At API for Gateway
+
+- Added resource luminaire-types with methods:
+    + **getLuminaireTypes**: Get the list of all luminaire types
+    + **addLuminaireTypes**: Add a list of new luminaire types
+    + **updateLuminaireTypes**: Update a list of existing luminaire types
+    + **getLuminaireTypesCount**: Get the count of luminaire types
+    + **getLuminaireType**: Get a single luminaireType by address
+    + **updateLuminaireType**: Update a single luminaire type by id
+    + **deleteLuminaireType**: Delete a single luminaire type
+- Added resource bracket-types with methods:
+    + **getLuminaireTypes**: Get the list of all bracket types
+    + **addLuminaireTypes**: Add a list of new bracket types
+    + **updateLuminaireTypes**: Update a list of existing bracket types
+    + **getLuminaireTypesCount**: Get the count of bracket types
+    + **getLuminaireType**: Get a single bracketType by address
+    + **updateLuminaireType**: Update a single bracket type by id
+    + **deleteLuminaireType**: Delete a single bracket type
+- Added resource driver-types with methods:
+    + **getLuminaireTypes**: Get the list of all driver types
+    + **addLuminaireTypes**: Add a list of new driver types
+    + **updateLuminaireTypes**: Update a list of existing driver types
+    + **getLuminaireTypesCount**: Get the count of driver types
+    + **getLuminaireType**: Get a single driverType by address
+    + **updateLuminaireType**: Update a single driver type by id
+    + **deleteLuminaireType**: Delete a single driver type
+- Added resource controller-types with methods:
+    + **getLuminaireTypes**: Get the list of all controller types
+    + **addLuminaireTypes**: Add a list of new controller types
+    + **updateLuminaireTypes**: Update a list of existing controller types
+    + **getLuminaireTypesCount**: Get the count of controller types
+    + **getLuminaireType**: Get a single controllerType by address
+    + **updateLuminaireType**: Update a single controller type by id
+    + **deleteLuminaireType**: Delete a single controller type
 
 ## 2.4.1
 
