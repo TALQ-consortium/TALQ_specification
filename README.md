@@ -17,10 +17,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20230105-Approved-TALQ-Specification-Version-2.5.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-5-0.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-5-0.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-5-0.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20230105-Approved-TALQ-Specification-Version-2.5.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-5-1.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-5-1.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-5-1.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -28,6 +28,10 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-5-1.json](oas/talq-data-model-2-5-1.json)    | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-gateway-2-5-1.json](oas/talq-api-gateway-2-5-1.json)  | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-cms-2-5-1.json](oas/talq-api-cms-2-5-1.json)          | [2.5.1](#251) | 2023/06/02  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-5-0.json](oas/talq-data-model-2-5-0.json)    | [2.5.0](#250) | 2023/01/05  |
 | [oas/talq-api-gateway-2-5-0.json](oas/talq-api-gateway-2-5-0.json)  | [2.5.0](#250) | 2023/01/05  |
 | [oas/talq-api-cms-2-5-0.json](oas/talq-api-cms-2-5-0.json)          | [2.5.0](#250) | 2023/01/05  |
@@ -59,6 +63,38 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.5.1
+
+### At Data model
+
+- `BasicFunction.cabinetDoorOpen` was deprecated by `SegmentMonitorFunction.cabinetDoorOpen` with version 2.4.0, but it was described the opposite in the Specs. 
+- The `whiteList` and `blackList` fields of the `EventRecordingMode.sourceEvents` field must be handled the same as`LoggerConfig` `sourceAddressses` field.
+- The `DriverType.address` must be mandatory for all profiles.
+- `TrafficCounter` function was mandatory for lighting asset management profile for CMS & GW when it should be optional.
+- `Control Service` should not be mandatory for `Asset Management Profile`
+- `LuminaireType.corrosionClass`: Fix the enum list `C1` instead of `"Enum:C1"`
+- `LuminaireType.aerodinamicResistance` deprecated because of a typo in the name, `LuminaireType.aerodynamicResistance` must be used instead
+- `DriverType.aerodinamicResistance` deprecated because of a typo in the name, `LuminaireType.aerodynamicResistance` must be used instead
+- `LuminaireType.materialLlightCover` deprecated because of a typo in the name, `materialLightCover` must be used instead
+- Added "x-talq-unit" to the `LuminaireType`'s properties: `lowCurrentThreshold`, `highCurrentThreshold`, `address`, `name`, `gtin`, `manufacturerName`, `productFamily`, `model`, `hardwareVersion`, `lightSourceType`, `lightDistributionType`, `lcsRating`, `lightPhotometry`, `driverReplaceable`, `lightSourceReplaceable`, `materialEnclosure`, `materialLlightCover`, `materialLightCover`, `lightCoverShape`, `socketTypes`, `controlVoltMax`, `controlVoltMin`, `minLightOutput`, `virtualLightOutput`, `daliLedLinear`, `warmUpTime`, `maxOperatingHours`, `powerLightGradient`, `lampPowerTolerance`, `lampPowerHighThreshold`, `lampPowerLowThreshold`, `powerFactorThreshold`, `lumenDepreciationCurve`, `cloType`, `powerFactorThresholdDimmingCurve`, `lightSourceLedNumber`, `lightSourceGtin`, `lightSourceManufacturerName`, `lightSourceProductFamily`, `lightSourceModel`, `electricalIsolationClass`.
+- Added "x-talq-unit" to the `BracketType`'s properties: `address`, `name`, `gtin`, `manufacturerName`, `productFamily`, `model`, `mountingOptions`. 
+- Added "x-talq-unit" to the `DriverType`'s properties: `address`, `name`, `controlElectricalInterfaceTypes`, `controlInterfaceProtocolTypes`, `programInterfaceType`, `gtin`, `manufacturerName`, `productFamily`, `model`, `hardwareVersion`, `controlOutputType`, `dimmingOutputType`, `dimmingOutputs`.
+- Added "x-talq-unit" to the `ControllerType`'s propertoes: `address`, `name`, `gtin`, `manufacturerName`, `productFamily`, `model`, `mechanicalInterfaces`, `electricalInterfaces`, `protocols`.
+- Fixing some descriptions of clientAddress, where it is the address of the Gateway.
+- Added `powerConsumption` to `LuminaireType`. 
+- Clarify `DynamicControl.period` definition.
+- Clarify `AbsoluteActivePeriod` definition regarding where to split a period that covers two days.
+- Clarify `SensorActivePeriod` and `AstroAndSensorActivePeriod` with `onLevel` and `offLevel` definitions when using a Photocell as sensor.
+
+
+### At API for CMS
+
+None
+
+### At API for Gateway
+
+None
 
 ## 2.5.0
 
