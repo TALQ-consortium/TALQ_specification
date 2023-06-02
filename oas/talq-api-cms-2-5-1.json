@@ -1,0 +1,5701 @@
+{
+  "openapi": "3.0.1",
+  "servers": [
+    {
+      "url": "https://talq-consortium.org/v2"
+    }
+  ],
+  "info": {
+    "description": "This is a description of CMS RESTful API. To provide a bidirectional pipeline, the TALQ architecture implements a HTTP server on both the CMS and on the Gateway side. This CMS API can be used by the Gateway to send requests to the CMS.",
+    "version": "2.5.1",
+    "title": "TALQ Smart City CMS API",
+    "contact": {
+      "name": "TALQ Consortium",
+      "email": "info@talq-consortium.org",
+      "url": "http://talq-consortium.org"
+    },
+    "license": {
+      "name": "BSD 3-Clause License",
+      "url": "https://github.com/TALQ-consortium/TALQ_specification/blob/main/LICENSE",
+      "x-license-content": "Copyright 2022 TALQ Consortium \n Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\n\n 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.\n \n 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.\n\n 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.\n \n THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.      "
+    }
+  },
+  "tags": [
+    {
+      "name": "services",
+      "description": "Access to services"
+    },
+    {
+      "name": "device-classes",
+      "description": "Access to devices classes"
+    },
+    {
+      "name": "devices",
+      "description": "Access to devices"
+    },
+    {
+      "name": "logger-configs",
+      "description": "Access to logger configuration"
+    },
+    {
+      "name": "log-reports",
+      "description": "Access to log reports"
+    },
+    {
+      "name": "groups",
+      "description": "Access to groups"
+    },
+    {
+      "name": "data-packages",
+      "description": "Access to data packages"
+    }
+  ],
+  "paths": {
+    "/services": {
+      "post": {        
+        "tags": [
+          "services"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Announce the list of services supported by the gateway",
+        "operationId": "announceServices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The list of supported services that has been received."
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the Gateway might be able to resolve the conflict and resubmit the request. The CMS SHOULD generate a payload that includes enough information for a Gateway to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "description": "The list of services supported by the gateway"
+        }
+      }
+    },
+    "/device-classes": {
+      "post": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Send all device classes supported by the gateway and still not announced",
+        "operationId": "addDeviceClasses",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The list of device classes that has been received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the Gateway might be able to resolve the conflict and resubmit the request. The CMS SHOULD generate a payload that includes enough information for a Gateway to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Update all device classes supported by the gateway",
+        "operationId": "updateDeviceClasses",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of device classes that has been updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device class not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }                    
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/device-classes/{className}": {
+      "put": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Update a device class",
+        "operationId": "updateDeviceClass",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "className",
+            "in": "path",
+            "description": "The class name of device to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device class that has been updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "device-classes"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "delete a device class",
+        "operationId": "deleteDeviceClass",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "className",
+            "in": "path",
+            "description": "The class name of device to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device class that has been deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DeviceClass"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device class not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }                    
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Get the list of all devices, their functions and attributes. Pagination is an optional feature at this operation, and if it is implemented it will be active only when 'offset', 'limit' or both parameters are present, otherwise the whole list of devices must be sent as a response. 'limit' allows the client to set the number of devices returned, while 'offset' specifies the ranking number of the first device on the page, being offset=0 the first device. Pagination requires an implied ordering/indexing, although it is outside TALQ scope and will be the CMS responsibility. When 'limit' is present but 'offset' is not, the result shall start with the first device of the list. If no 'limit' parameter is provided, but only an 'offset', the CMS default limit is used. ",
+        "operationId": "getDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceClasses",
+            "in": "query",
+            "description": "Class names to filter by",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of devices to skip before beginning to return the result.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of devices to return.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of all devices if pagination is not active or the configured number of devices if it is active.",
+            "headers": {
+              "pagination-offset":{
+                "description": "Number of devices skipped on the complete list",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-defaultLimit":{
+                "description": "Default limit if not specified as query parameter",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-count":{
+                "description": "Number of devices included in the response",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "pagination-totalCount":{
+                "description": "Total number of devices present in the server",
+                "schema": {
+                  "type": "integer"
+                }                
+              }
+            },            
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Add a list of new devices",
+        "operationId": "addDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The devices are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the Gateway might be able to resolve the conflict and resubmit the request. The CMS SHOULD generate a payload that includes enough information for a Gateway to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of devices that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Update a list of existing devices. Replaces the entire existing device definition. For the function array this will mean the existing device functions will be replaced with those specified in this call.",
+        "operationId": "updateDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of devices is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devices not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of device that need to be updated",
+          "required": true
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Partial update of a list of existing devices. Partially updates the existing device definition. For the function array each element passed in will be cross-referenced against items in the existing function array using the id. If they match, the existing function will be updated. If there is no match the function will be added. To remove functions from the array see ‘PUT’, where an empty or reduced function array can be passed in.",
+        "operationId": "partialUpdateDevices",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of device is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Devices not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "description": "The list of device that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/devices/{deviceAddress}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Get a single device by TALQ address",
+        "operationId": "getDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found device",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Update a single device, replacing its definition and list of functions with the content passed in.",
+        "operationId": "updateDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+              }
+            }
+          },
+          "description": "The device that need to be updated",
+          "required": true
+        }
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Partially updates the existing device definition. For the function array each element passed in will be cross-referenced against items in the existing function array using the id. If they match, the existing function will be updated. If there is no match the function will be added. For each function, only the attributes passed in will be updated in the existing function.",
+        "operationId": "partialUpdateDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device is successfully updated"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+              }
+            }
+          },
+          "description": "The device that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Delete a single device",
+        "operationId": "deleteDevice",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The device is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceAddress}/{functionId}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Get a single Function of a device",
+        "operationId": "getDeviceFunction",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attributeScope",
+            "in": "query",
+            "description": "Scope to filter attributes by. Only attributes with matching scopes must be returned, if not specified all attributes are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found device Function",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Function"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device or Function not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceAddress}/{functionId}/{attributeName}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Get a single attribute of a device function",
+        "operationId": "getDeviceAttribute",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceAddress",
+            "in": "path",
+            "description": "The TALQ address of device",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "functionId",
+            "in": "path",
+            "description": "The identifier of device Function",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attributeName",
+            "in": "path",
+            "description": "The name of device Attribute",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found attribute of a device function",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Attribute"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Device, Function or Attribute not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logger-configs/{loggerAddress}": {
+      "get": {
+        "tags": [
+          "logger-configs"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Get the configuration of a logger",
+        "operationId": "getLoggerConfig",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "loggerAddress",
+            "in": "path",
+            "description": "The identifier of logger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The configuration of logger",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LoggerConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Logger not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/log-reports": {
+      "post": {
+        "tags": [
+          "log-reports"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "wasteManagement": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "environmentalMonitoring": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartParking": {
+              "cms": "M",
+              "gw": "M"
+            },
+            "smartTraffic": {
+              "cms": "M",
+              "gw": "M"
+            }
+
+          }
+        ],
+        "description": "Send a log report",
+        "operationId": "sendLogReport",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The log report has been treated successfully"
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LogReport"
+              }
+            }
+          },
+          "description": "The log report to send",
+          "required": true
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get all groups",
+        "operationId": "getGroups",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups/{groupAddress}": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get a single group",
+        "operationId": "getGroup",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupAddress",
+            "in": "path",
+            "description": "The address of group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/Group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lamp-types": {
+      "post": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Add a list of new lamp types",
+        "operationId": "addLampTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The lamp types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the Gateway might be able to resolve the conflict and resubmit the request. The CMS SHOULD generate a payload that includes enough information for a Gateway to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "description": "The list of lamp types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Update a list of existing lamp types",
+        "operationId": "updateLampTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "description": "The list of lamp types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/lamp-types/count": {
+      "get": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get the count of lamp types",
+        "operationId": "getLampTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of lamp types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lamp-types/{lampTypeAddress}": {
+      "get": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get a single lampType by address",
+        "operationId": "getLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lampType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found lampType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LampType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Update a single lamp type by id",
+        "operationId": "updateLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lamp type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+              }
+            }
+          },
+          "description": "The lamp type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "lamp-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Delete a single lamp type",
+        "operationId": "deleteLampType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lampTypeAddress",
+            "in": "path",
+            "description": "identifier of lamp tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The lamp type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LampType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lamp type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/luminaire-types": {
+      "get": {
+          "tags": [
+            "luminaire-types"
+          ],
+          "summary": "",
+          "x-talq-profiles":[
+            {
+              "lighting": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "wasteOanagement": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "environmentalOonitoring": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartParking": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartTraffic": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "lightingAssetManagement": {
+                "cms": "M",
+                "gw": "M"
+              }
+            }
+          ],
+          "description": "Get the list of all luminaire-types",
+          "operationId": "getLuminaireTypes",
+          "parameters": [
+            {
+              "in": "header",
+              "name": "talq-api-version",
+              "description": "the version of TALQ API",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "clientAddress",
+              "description": "The address of Gateway",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The list of all luminaire-types",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Request not as defined in the TALQ Specification",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                    }                  
+                  }
+                }
+              }
+            }
+          }
+        },
+      "post": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new luminaire types",
+        "operationId": "addLuminaireTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The luminaire types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the CMS might be able to resolve the conflict and resubmit the request. The Gateway SHOULD generate a payload that includes enough information for a CMS to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                }
+              }
+            }
+          },
+          "description": "The list of luminaire types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing luminaire types",
+        "operationId": "updateLuminaireTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The luminaire types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Luminaire types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                }
+              }
+            }
+          },
+          "description": "The list of luminaire types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/luminaire-types/count": {
+      "get": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of luminaire types",
+        "operationId": "getLuminaireTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of luminaire types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/luminaire-types/{luminaireTypeAddress}": {
+      "get": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single luminaireType by address",
+        "operationId": "getLuminaireType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "luminaireTypeAddress",
+            "in": "path",
+            "description": "identifier of luminaireType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found luminaireType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LuminaireType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single luminaire type by id",
+        "operationId": "updateLuminaireType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "luminaireTypeAddress",
+            "in": "path",
+            "description": "identifier of luminaire type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The luminaire type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Luminaire type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+              }
+            }
+          },
+          "description": "The luminaire type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "luminaire-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single luminaire type",
+        "operationId": "deleteLuminaireType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "luminaireTypeAddress",
+            "in": "path",
+            "description": "identifier of luminaire tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The luminaire type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/LuminaireType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Luminaire type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bracket-types": {
+      "get": {
+          "tags": [
+            "bracket-types"
+          ],
+          "summary": "",
+          "x-talq-profiles":[
+            {
+              "lighting": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "wasteOanagement": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "environmentalOonitoring": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartParking": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartTraffic": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "lightingAssetManagement": {
+                "cms": "M",
+                "gw": "M"
+              }
+            }
+          ],
+          "description": "Get the list of all bracket-types",
+          "operationId": "getBracketTypes",
+          "parameters": [
+            {
+              "in": "header",
+              "name": "talq-api-version",
+              "description": "the version of TALQ API",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "clientAddress",
+              "description": "The address of Gateway",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The list of all bracket-types",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Request not as defined in the TALQ Specification",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                    }                  
+                  }
+                }
+              }
+            }
+          }
+        },
+      "post": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new bracket types",
+        "operationId": "addBracketTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The bracket types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the CMS might be able to resolve the conflict and resubmit the request. The Gateway SHOULD generate a payload that includes enough information for a CMS to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                }
+              }
+            }
+          },
+          "description": "The list of bracket types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing bracket types",
+        "operationId": "updateBracketTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bracket types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bracket types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                }
+              }
+            }
+          },
+          "description": "The list of bracket types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/bracket-types/count": {
+      "get": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of bracket types",
+        "operationId": "getBracketTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of bracket types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bracket-types/{bracketTypeAddress}": {
+      "get": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single bracketType by address",
+        "operationId": "getBracketType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bracketTypeAddress",
+            "in": "path",
+            "description": "identifier of bracketType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found bracketType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "BracketType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single bracket type by id",
+        "operationId": "updateBracketType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bracketTypeAddress",
+            "in": "path",
+            "description": "identifier of bracket type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bracket type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bracket type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+              }
+            }
+          },
+          "description": "The bracket type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "bracket-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single bracket type",
+        "operationId": "deleteBracketType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bracketTypeAddress",
+            "in": "path",
+            "description": "identifier of bracket tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bracket type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/BracketType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bracket type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver-types": {
+      "get": {
+          "tags": [
+            "driver-types"
+          ],
+          "summary": "",
+          "x-talq-profiles":[
+            {
+              "lighting": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "wasteOanagement": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "environmentalOonitoring": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartParking": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartTraffic": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "lightingAssetManagement": {
+                "cms": "M",
+                "gw": "M"
+              }
+            }
+          ],
+          "description": "Get the list of all driver-types",
+          "operationId": "getDriverTypes",
+          "parameters": [
+            {
+              "in": "header",
+              "name": "talq-api-version",
+              "description": "the version of TALQ API",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "clientAddress",
+              "description": "The address of Gateway",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The list of all driver-types",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Request not as defined in the TALQ Specification",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                    }                  
+                  }
+                }
+              }
+            }
+          }
+        },
+      "post": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new driver types",
+        "operationId": "addDriverTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The driver types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the CMS might be able to resolve the conflict and resubmit the request. The Gateway SHOULD generate a payload that includes enough information for a CMS to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                }
+              }
+            }
+          },
+          "description": "The list of driver types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing driver types",
+        "operationId": "updateDriverTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The driver types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                }
+              }
+            }
+          },
+          "description": "The list of driver types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/driver-types/count": {
+      "get": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of driver types",
+        "operationId": "getDriverTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of driver types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver-types/{driverTypeAddress}": {
+      "get": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single driverType by address",
+        "operationId": "getDriverType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "driverTypeAddress",
+            "in": "path",
+            "description": "identifier of driverType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found driverType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "DriverType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single driver type by id",
+        "operationId": "updateDriverType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "driverTypeAddress",
+            "in": "path",
+            "description": "identifier of driver type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The driver type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+              }
+            }
+          },
+          "description": "The driver type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "driver-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single driver type",
+        "operationId": "deleteDriverType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "driverTypeAddress",
+            "in": "path",
+            "description": "identifier of driver tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The driver type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DriverType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/controller-types": {
+      "get": {
+          "tags": [
+            "controller-types"
+          ],
+          "summary": "",
+          "x-talq-profiles":[
+            {
+              "lighting": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "wasteOanagement": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "environmentalOonitoring": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartParking": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "smartTraffic": {
+                "cms": "O",
+                "gw": "O"
+              },
+              "lightingAssetManagement": {
+                "cms": "M",
+                "gw": "M"
+              }
+            }
+          ],
+          "description": "Get the list of all controller-types",
+          "operationId": "getControllerTypes",
+          "parameters": [
+            {
+              "in": "header",
+              "name": "talq-api-version",
+              "description": "the version of TALQ API",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "in": "query",
+              "name": "clientAddress",
+              "description": "The address of Gateway",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The list of all controller-types",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Request not as defined in the TALQ Specification",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                    }                  
+                  }
+                }
+              }
+            }
+          }
+        },
+      "post": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Add a list of new controller types",
+        "operationId": "addControllerTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The controller types are successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the CMS might be able to resolve the conflict and resubmit the request. The Gateway SHOULD generate a payload that includes enough information for a CMS to recognize the source of the conflict.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                }
+              }
+            }
+          },
+          "description": "The list of controller types that needs to be added",
+          "required": true
+        }
+      },
+      "put": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a list of existing controller types",
+        "operationId": "updateControllerTypes",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The controller types are successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Controller types not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                }
+              }
+            }
+          },
+          "description": "The list of controller types that need to be updated",
+          "required": true
+        }
+      }
+    },
+    "/controller-types/count": {
+      "get": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get the count of controller types",
+        "operationId": "getControllerTypesCount",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The count of controller types",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/controller-types/{controllerTypeAddress}": {
+      "get": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Get a single controllerType by address",
+        "operationId": "getControllerType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controllerTypeAddress",
+            "in": "path",
+            "description": "identifier of controllerType to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found controllerType",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ControllerType not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Update a single controller type by id",
+        "operationId": "updateControllerType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controllerTypeAddress",
+            "in": "path",
+            "description": "identifier of controller type to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The controller type is successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Controller type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+              }
+            }
+          },
+          "description": "The controller type that need to be updated",
+          "required": true
+        }
+      },
+      "delete": {
+        "tags": [
+          "controller-types"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "lightingAssetManagement": {
+              "cms": "M",
+              "gw": "M"
+            }
+          }
+        ],
+        "description": "Delete a single controller type",
+        "operationId": "deleteControllerType",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "controllerTypeAddress",
+            "in": "path",
+            "description": "identifier of controller tye to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The controller type is successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/ControllerType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Controller type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+      "/data-packages": {
+      "get": {
+        "tags": [
+          "data-packages"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get the list of last data packages",
+        "operationId": "getDataPackages",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of last data packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DataPackage"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data-packages/{packageAddress}": {
+      "get": {
+        "tags": [
+          "data-packages"
+        ],
+        "summary": "",
+        "x-talq-profiles":[
+          {
+            "lighting": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "wasteManagement": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "environmentalMonitoring": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartParking": {
+              "cms": "O",
+              "gw": "O"
+            },
+            "smartTraffic": {
+              "cms": "O",
+              "gw": "O"
+            }
+
+          }
+        ],
+        "description": "Get a specific data package",
+        "operationId": "getDataPackage",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "talq-api-version",
+            "description": "the version of TALQ API",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "clientAddress",
+            "description": "The address of Gateway",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "packageAddress",
+            "in": "path",
+            "description": "The identifier of data package",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found data package",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./talq-data-model-2-5-1.json#/components/schemas/DataPackage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request not as defined in the TALQ Specification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Data package not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "./talq-data-model-2-5-1.json#/components/schemas/TALQErrorMessage"
+                  }                  
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about TALQ Consortium",
+    "url": "http://talq-consortium.org"
+  }
+}
