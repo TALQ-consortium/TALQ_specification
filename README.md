@@ -28,9 +28,9 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
-| [oas/talq-data-model-2-6-0.json](oas/talq-data-model-2-6-0.json)    | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-gateway-2-6-0.json](oas/talq-api-gateway-2-6-0.json)  | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-cms-2-6-0.json](oas/talq-api-cms-2-6-0.json)          | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-data-model-2-6-0.json](oas/talq-data-model-2-6-0-online.json)    | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-gateway-2-6-0.json](oas/talq-api-gateway-2-6-0-online.json)  | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-cms-2-6-0.json](oas/talq-api-cms-2-6-0.json-online)          | [2.6.0](#260) | 2024/01/17  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-5-1.json](oas/talq-data-model-2-5-1.json)    | [2.5.1](#251) | 2023/06/02  |
 | [oas/talq-api-gateway-2-5-1.json](oas/talq-api-gateway-2-5-1.json)  | [2.5.1](#251) | 2023/06/02  |
