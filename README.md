@@ -17,10 +17,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20230602-Approved-TALQ-Specification-Version-2.5.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-5-1.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-5-1.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-5-1.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20240117-Approved-TALQ-Specification-Version-2.6.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-6-0-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-0-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-0-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -28,13 +28,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-6-0.json](oas/talq-data-model-2-6-0.json)    | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-gateway-2-6-0.json](oas/talq-api-gateway-2-6-0.json)  | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-cms-2-6-0.json](oas/talq-api-cms-2-6-0.json)          | [2.6.0](#260) | 2024/01/17  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-5-1.json](oas/talq-data-model-2-5-1.json)    | [2.5.1](#251) | 2023/06/02  |
 | [oas/talq-api-gateway-2-5-1.json](oas/talq-api-gateway-2-5-1.json)  | [2.5.1](#251) | 2023/06/02  |
 | [oas/talq-api-cms-2-5-1.json](oas/talq-api-cms-2-5-1.json)          | [2.5.1](#251) | 2023/06/02  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-5-0.json](oas/talq-data-model-2-5-0.json)    | [2.5.0](#250) | 2023/01/05  |
-| [oas/talq-api-gateway-2-5-0.json](oas/talq-api-gateway-2-5-0.json)  | [2.5.0](#250) | 2023/01/05  |
-| [oas/talq-api-cms-2-5-0.json](oas/talq-api-cms-2-5-0.json)          | [2.5.0](#250) | 2023/01/05  |
+| [oas/talq-data-model-2-5-0.json](old-version.md)                    | [2.5.0](#250) | 2023/01/05  |
+| [oas/talq-api-gateway-2-5-0.json](old-version.md)                   | [2.5.0](#250) | 2023/01/05  |
+| [oas/talq-api-cms-2-5-0.json](old-version.md)                       | [2.5.0](#250) | 2023/01/05  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-4-1.json](old-version.md)                    | [2.4.1](#241) | 2022/04/08  |
 | [oas/talq-api-gateway-2-4-1.json](old-version.md)                   | [2.4.1](#241) | 2022/04/08  |
@@ -63,6 +67,54 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.6.0
+
+### At Data model
+
+- Added `CabinetConfigurationFunction`.
+- Added `CabinetMonitorFunction`.
+- The `SegmentMonitor.cabinetDoorOpen` and `SegmentMonitor.leakageDetected` event properties deprecated.
+- Add `SegmentMonitor.actualState`.
+- Clarify the `AssignCommand` description for de-associate.
+- Add `ValueActivePeriod`, used by `ControlProgram` and `RecordingMode`.
+- Add `activePeriods` to `RecordingMode`.
+- Add `recordingActivePeriodsSupported` and `supportedTypes` to `DataCollectService`.
+- Add `cmsRefId` in `AssignCommand`.
+- Add `CCTColorState`.
+- Add `LevelAndCCTColorState`.
+- Add `LevelAndRGBWAFColorState`.
+- Add `LevelAndXYColorState`.
+- Add `RGBWAFColorState`.
+- Add `XYColorState`.
+- Add `AttributeCCTColorState`.
+- Add `AttributeLevelAndCCTColorState`.
+- Add `AttributeLevelAndRGBWAFColorState`.
+- Add `AttributeLevelAndXYColorState`.
+- Add `AttributeRGBWAFColorState`.
+- Add `AttributeXYColorState`.
+- Fixed: "kg" unit replaced by "Kilograms".
+- Added "Watts" unit to AtributeDesc to be aligned.
+- Added "SquareMeters" unit to AtributeDesc to be aligned.
+- Fixed: "m2" unit replaced by "SquareMeters".
+- Add `LampMonitorFunction.actuatorReference` attribute.
+- Add `SegmentMonitorFunction.actuatorReference` attribute.
+- Add `ElectricalMeterFunction.actuatorReference` attribute.
+
+### At API for CMS:
+
+- Added getLampTypes method to CMS API.
+- Addded new error response for semantic errors: 422-Unprocessable Entity
+- Addded new request parameters: `talqRequestId` and `talqOriginRequestId`.
+
+### At API for Gateway
+
+- Added getLampTypes method to Gateway API.
+- Added getAssignCommands method to Gateway API.
+- Added new error response for semantic errors: 422-Unprocessable Entity.
+- Added new asynchronous response for POST override-commands: 202-Accepted.
+- The asynchronous 202-Accepted response was added for POST, PATCH, PUT and DELETE requests on /devices, /devices/{deviceAddress}, /devices/{deviceAddress}/{functionId} and /devices/{deviceAddress}/{functionId}/{attributeName}.
+- Addded new request parameters: `talqRequestId` and `talqOriginRequestId`. 
 
 ## 2.5.1
 
