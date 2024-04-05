@@ -3667,7 +3667,7 @@
             }
           },
           {
-            "description": "The TALQ address of device",
+            "description": "The identifier of the Attribute",
             "in": "path",
             "name": "attributeName",
             "required": true,
