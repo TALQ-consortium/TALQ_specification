@@ -9,6 +9,9 @@ TALQ provides answers to the main challenges of building really smart cities inc
 
 Driven originally by smart street lighting vendors, TALQ is now an open industry consortium addressing the entire smart city environment allowing manufacturers of smart city applications to join as members and certify their products as TALQ-compliant. Other stakeholders such as cities, municipalities, utilities, consultants, universities and many others can join the consortium as Partners Let’s TALQ !
 
+# Why to certify your product
+TALQ Certification verifies that a product has implemented the TALQ protocol according to the TALQ specification. Read the [CERTIFICATION.md file](CERTIFICATION.md).
+
 
 # TALQ 2: A RESTful API
 
