@@ -12,6 +12,8 @@ Driven originally by smart street lighting vendors, TALQ is now an open industry
 # Why to certify your product
 TALQ Certification verifies that a product has implemented the TALQ protocol according to the TALQ specification. Read the [CERTIFICATION.md file](CERTIFICATION.md).
 
+> **Important Notice**: TALQ Trademark Usage
+> Please note that according to our [LICENSE](LICENSE), only TALQ members are authorized to use the TALQ trademarks (logo and name). 
 
 # TALQ 2: A RESTful API
 
