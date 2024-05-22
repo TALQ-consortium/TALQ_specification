@@ -3665,6 +3665,24 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "The identifier of the Attribute",
+            "in": "path",
+            "name": "attributeName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The identifier of device Function",
+            "in": "path",
+            "name": "functionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
