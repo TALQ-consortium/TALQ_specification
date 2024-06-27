@@ -34,13 +34,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-6-1.json](oas/talq-data-model-2-6-1-online.json)    | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-gateway-2-6-1.json](oas/talq-api-gateway-2-6-1-online.json)  | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-cms-2-6-1.json](oas/talq-api-cms-2-6-1.json-online)          | [2.6.1](#261) | 2024/06/27  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-6-0.json](oas/talq-data-model-2-6-0-online.json)    | [2.6.0](#260) | 2024/01/17  |
 | [oas/talq-api-gateway-2-6-0.json](oas/talq-api-gateway-2-6-0-online.json)  | [2.6.0](#260) | 2024/01/17  |
 | [oas/talq-api-cms-2-6-0.json](oas/talq-api-cms-2-6-0.json-online)          | [2.6.0](#260) | 2024/01/17  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-5-1.json](oas/talq-data-model-2-5-1.json)    | [2.5.1](#251) | 2023/06/02  |
-| [oas/talq-api-gateway-2-5-1.json](oas/talq-api-gateway-2-5-1.json)  | [2.5.1](#251) | 2023/06/02  |
-| [oas/talq-api-cms-2-5-1.json](oas/talq-api-cms-2-5-1.json)          | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-data-model-2-5-1.json](old-version.md)                    | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-gateway-2-5-1.json](old-version.md)                   | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-cms-2-5-1.json](old-version.md)                       | [2.5.1](#251) | 2023/06/02  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-5-0.json](old-version.md)                    | [2.5.0](#250) | 2023/01/05  |
 | [oas/talq-api-gateway-2-5-0.json](old-version.md)                   | [2.5.0](#250) | 2023/01/05  |
@@ -73,6 +77,30 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+# Release notes
+
+## 2.6.1
+
+### At Data model
+
+The OAS data model is updated to clarify some usages:
+
+- Adding in the `DynamicControl` description: _If no period is defined, the dynamic control is applied for the full day._
+- Adding in the `DynamicControl.period` description: _If startTime is equal to endTime, it means the full day period is active. This full-day period can be from noon to noon, or midnight to midnight, based on the dayOffset._
+- Adding in the `AbsoluteActivePeriod` description: _If startTime is equal to endTime, it means the full day period is active. This full-day period can be from noon to noon, or midnight to midnight, based on the dayOffset._
+- Adding in the `ResourceReference.address`  description: _Both, Gateway and CMS, must support all address modalities._
+- Adding in the `ccDate` description: _The end day must be higher than the start day._
+- Adding in the `ccDay` description: _The end weekday must be higher than the start weekday._
+
+
+### At API for CMS:
+
+- The parameters `functionId` and `attributeName` definitions were missing in GET `/devices/{deviceAddress}/{functionId}/{attributeName}`
+
+
+### At API for Gateway
+
 
 ## 2.6.0
 
