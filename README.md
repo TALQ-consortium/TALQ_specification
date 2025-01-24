@@ -23,10 +23,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20240627-TALQ-Specification-Approved-Version-2.6.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-6-1-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-1-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-1-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20250124-TALQ-Specification-Approved-Version-2.6.2.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-6-2-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-2-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-2-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -34,13 +34,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-6-2.json](oas/talq-data-model-2-6-2-online.json)    | [2.6.2](#262) | 2025/01/24  |
+| [oas/talq-api-gateway-2-6-2.json](oas/talq-api-gateway-2-6-2-online.json)  | [2.6.2](#262) | 2025/01/24  |
+| [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2.json-online)          | [2.6.2](#262) | 2025/01/24  |
+|                                                                     |               |             |
 | [oas/talq-data-model-2-6-1.json](oas/talq-data-model-2-6-1-online.json)    | [2.6.1](#261) | 2024/06/27  |
 | [oas/talq-api-gateway-2-6-1.json](oas/talq-api-gateway-2-6-1-online.json)  | [2.6.1](#261) | 2024/06/27  |
 | [oas/talq-api-cms-2-6-1.json](oas/talq-api-cms-2-6-1.json-online)          | [2.6.1](#261) | 2024/06/27  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-6-0.json](oas/talq-data-model-2-6-0-online.json)    | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-gateway-2-6-0.json](oas/talq-api-gateway-2-6-0-online.json)  | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-cms-2-6-0.json](oas/talq-api-cms-2-6-0.json-online)          | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-data-model-2-6-0.json](old-version.md)                    | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-gateway-2-6-0.json](old-version.md)                   | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-cms-2-6-0.json](old-version.md)                       | [2.6.0](#260) | 2024/01/17  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-5-1.json](old-version.md)                    | [2.5.1](#251) | 2023/06/02  |
 | [oas/talq-api-gateway-2-5-1.json](old-version.md)                   | [2.5.1](#251) | 2023/06/02  |
@@ -79,6 +83,23 @@ To stay up-to-date you can sign up for the TALQ Newsletter which is published ap
 # Release notes
 
 # Release notes
+
+## 2.6.2
+### At Data model
+
+- Add `genericError` key in `TALQErrorMessage`.
+- Clarify the use of `entity` in an `AssignCommand`.
+
+### At API for CMS:
+
+- Add `application/json` to all count methods.
+
+
+### At API for Gateway
+
+- Add `application/json` to all count methods.
+- Clarify the `getLogReport` description.
+
 
 ## 2.6.1
 
