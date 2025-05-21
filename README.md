@@ -13,7 +13,7 @@ Driven originally by smart street lighting vendors, TALQ is now an open industry
 TALQ Certification verifies that a product has implemented the TALQ protocol according to the TALQ specification. Read the [CERTIFICATION.md file](CERTIFICATION.md).
 
 # Trademark Notice
-The word TALQ and the TALQ logo are registered trademarks of the TALQ Consortium. If you plan to reference TALQ in any form, please consult the [TALQ website](https://www.talq-consortium.org/2-why-talq/policies.html) for detailed guidelines on appropriate usage. Use of the TALQ logo is restricted to members only. Proper usage helps preserve the value and integrity of the TALQ brand for the entire smart city community.
+The word TALQ and the TALQ logo are registered trademarks of the TALQ Consortium. If you plan to reference TALQ in any form, please consult the **TALQ Trademark Policy** in the [TALQ website](https://www.talq-consortium.org/2-why-talq/policies.html) for detailed guidelines on appropriate usage. Use of the TALQ logo is restricted to members only. Proper usage helps preserve the value and integrity of the TALQ brand for the entire smart city community.
 
 
 # TALQ 2: A RESTful API
