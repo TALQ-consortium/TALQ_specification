@@ -12,9 +12,9 @@ Driven originally by smart street lighting vendors, TALQ is now an open industry
 # Why to certify your product
 TALQ Certification verifies that a product has implemented the TALQ protocol according to the TALQ specification. Read the [CERTIFICATION.md file](CERTIFICATION.md).
 
-> **Important Notice**: TALQ Trademark Usage
->
-> Please note that according to our [LICENSE](LICENSE), only TALQ members are authorized to use the TALQ trademarks (logo and name). 
+# Trademark Notice
+The word TALQ and the TALQ logo are registered trademarks of the TALQ Consortium. If you plan to reference TALQ in any form, please consult the [TALQ website](https://www.talq-consortium.org/2-why-talq/policies.html) for detailed guidelines on appropriate usage. Use of the TALQ logo is restricted to members only. Proper usage helps preserve the value and integrity of the TALQ brand for the entire smart city community.
+
 
 # TALQ 2: A RESTful API
 
@@ -85,6 +85,7 @@ To stay up-to-date you can sign up for the TALQ Newsletter which is published ap
 # Release notes
 
 ## 2.6.2
+
 ### At Data model
 
 - Add `genericError` key in `TALQErrorMessage`.
