@@ -23,10 +23,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20250124-TALQ-Specification-Approved-Version-2.6.2.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-6-2-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-2-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-2-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20250723-TALQ-Specification-Approved-Version-2.6.3.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-6-3-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-3-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-3-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -34,13 +34,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                | Version       | Date        | 
 | ------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-6-3.json](oas/talq-data-model-2-6-3-online.json)    | [2.6.3](#263) | 2025/07/23  |
+| [oas/talq-api-gateway-2-6-3.json](oas/talq-api-gateway-2-6-3-online.json)  | [2.6.3](#263) | 2025/07/23  |
+| [oas/talq-api-cms-2-6-3.json](oas/talq-api-cms-2-6-3-online.json)          | [2.6.3](#263) | 2025/07/23  |
+
 | [oas/talq-data-model-2-6-2.json](oas/talq-data-model-2-6-2-online.json)    | [2.6.2](#262) | 2025/01/24  |
 | [oas/talq-api-gateway-2-6-2.json](oas/talq-api-gateway-2-6-2-online.json)  | [2.6.2](#262) | 2025/01/24  |
-| [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2.json-online)          | [2.6.2](#262) | 2025/01/24  |
+| [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2-online.json)          | [2.6.2](#262) | 2025/01/24  |
 |                                                                     |               |             |
-| [oas/talq-data-model-2-6-1.json](oas/talq-data-model-2-6-1-online.json)    | [2.6.1](#261) | 2024/06/27  |
-| [oas/talq-api-gateway-2-6-1.json](oas/talq-api-gateway-2-6-1-online.json)  | [2.6.1](#261) | 2024/06/27  |
-| [oas/talq-api-cms-2-6-1.json](oas/talq-api-cms-2-6-1.json-online)          | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-data-model-2-6-1.json](old-version.md)                    | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-gateway-2-6-1.json](old-version.md)                   | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-cms-2-6-1.json](old-version.md)                       | [2.6.1](#261) | 2024/06/27  |
 |                                                                     |               |             |
 | [oas/talq-data-model-2-6-0.json](old-version.md)                    | [2.6.0](#260) | 2024/01/17  |
 | [oas/talq-api-gateway-2-6-0.json](old-version.md)                   | [2.6.0](#260) | 2024/01/17  |
@@ -83,6 +87,31 @@ To stay up-to-date you can sign up for the TALQ Newsletter which is published ap
 # Release notes
 
 # Release notes
+
+## 2.6.3
+
+### At Data model
+
+Some fields initially approved for the light asset management were accidentally omitted from the specification and have been
+recently requested.
+
+- Add missing attribute: `warrantyYears` to `DriverAssetFunction`
+- Add missing attribute: `warrantyYears` to `ControllerAssetFunction`
+- Clarification added in `warrantyYears` description of `LuminaireAssetFunction`, `DriverAssetFunction`, `ControllerAssetFunction`, `LuminaireType`, `DriverType` and `ControllerType`
+- Add missing attribute: `lor` to `LuminaireType`
+- Add missing attribute: `cct` to `LuminaireType`
+- Add missing attribute: `cri` to `LuminaireType`
+- Add missing attribute: `backlightCutType` to `LuminaireType`
+
+
+### At API for CMS:
+
+- Removed `talqRequestId` and `talqOriginRequestId` parameters from `getDeviceAttribute` operation.
+
+
+### At API for Gateway
+
+None
 
 ## 2.6.2
 
