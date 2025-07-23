@@ -32,8 +32,8 @@ The TALQ Specification is splitted in four files, named with the [Semantic versi
 
 All the released versions of the TALQ Specification are in the table below: 
 
-| Name                                                                | Version       | Date        | 
-| ------------------------------------------------------------------- | --------------| ----------- |
+| Name                                                                       | Version       | Date        | 
+| -------------------------------------------------------------------------- | --------------| ----------- |
 | [oas/talq-data-model-2-6-3.json](oas/talq-data-model-2-6-3-online.json)    | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-gateway-2-6-3.json](oas/talq-api-gateway-2-6-3-online.json)  | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-cms-2-6-3.json](oas/talq-api-cms-2-6-3-online.json)          | [2.6.3](#263) | 2025/07/23  |
@@ -41,42 +41,42 @@ All the released versions of the TALQ Specification are in the table below:
 | [oas/talq-data-model-2-6-2.json](oas/talq-data-model-2-6-2-online.json)    | [2.6.2](#262) | 2025/01/24  |
 | [oas/talq-api-gateway-2-6-2.json](oas/talq-api-gateway-2-6-2-online.json)  | [2.6.2](#262) | 2025/01/24  |
 | [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2-online.json)          | [2.6.2](#262) | 2025/01/24  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-6-1.json](old-version.md)                    | [2.6.1](#261) | 2024/06/27  |
-| [oas/talq-api-gateway-2-6-1.json](old-version.md)                   | [2.6.1](#261) | 2024/06/27  |
-| [oas/talq-api-cms-2-6-1.json](old-version.md)                       | [2.6.1](#261) | 2024/06/27  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-6-0.json](old-version.md)                    | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-gateway-2-6-0.json](old-version.md)                   | [2.6.0](#260) | 2024/01/17  |
-| [oas/talq-api-cms-2-6-0.json](old-version.md)                       | [2.6.0](#260) | 2024/01/17  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-5-1.json](old-version.md)                    | [2.5.1](#251) | 2023/06/02  |
-| [oas/talq-api-gateway-2-5-1.json](old-version.md)                   | [2.5.1](#251) | 2023/06/02  |
-| [oas/talq-api-cms-2-5-1.json](old-version.md)                       | [2.5.1](#251) | 2023/06/02  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-5-0.json](old-version.md)                    | [2.5.0](#250) | 2023/01/05  |
-| [oas/talq-api-gateway-2-5-0.json](old-version.md)                   | [2.5.0](#250) | 2023/01/05  |
-| [oas/talq-api-cms-2-5-0.json](old-version.md)                       | [2.5.0](#250) | 2023/01/05  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-4-1.json](old-version.md)                    | [2.4.1](#241) | 2022/04/08  |
-| [oas/talq-api-gateway-2-4-1.json](old-version.md)                   | [2.4.1](#241) | 2022/04/08  |
-| [oas/talq-api-cms-2-4-1.json](old-version.md)                       | [2.4.1](#241) | 2022/04/08  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-4-0.json](old-version.md)                    | [2.4.0](#240) | 2021/12/15  |
-| [oas/talq-api-gateway-2-4-0.json](old-version.md)                   | [2.4.0](#240) | 2021/12/15  |
-| [oas/talq-api-cms-2-4-0.json](old-version.md)                       | [2.4.0](#240) | 2021/12/15  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-3-0.json](old-version.md)                    | [2.3.0](#230) | 2021/03/01  |
-| [oas/talq-api-gateway-2-3-0.json](old-version.md)                   | [2.3.0](#230) | 2021/03/01  |
-| [oas/talq-api-cms-2-3-0.json](old-version.md)                       | [2.3.0](#230) | 2021/03/01  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-2-0.json](old-version.md)                    | [2.2.0](#220) | 2020/04/01  |
-| [oas/talq-api-gateway-2-2-0.json](old-version.md)                   | [2.2.0](#220) | 2020/04/01  |
-| [oas/talq-api-cms-2-2-0.json](old-version.md)                       | [2.2.0](#220) | 2020/04/01  |
-|                                                                     |               |             |
-| [oas/talq-data-model-2-1-1.json](old-version.md)                    | 2.1.1         | 2019/10/01  |
-| [oas/talq-api-gateway-2-1-1.json](old-version.md)                   | 2.1.1         | 2019/10/01  |
-| [oas/talq-api-cms-2-1-1.json](old-version.md)                       | 2.1.1         | 2019/10/01  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-6-1.json](old-version.md)                           | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-gateway-2-6-1.json](old-version.md)                          | [2.6.1](#261) | 2024/06/27  |
+| [oas/talq-api-cms-2-6-1.json](old-version.md)                              | [2.6.1](#261) | 2024/06/27  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-6-0.json](old-version.md)                           | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-gateway-2-6-0.json](old-version.md)                          | [2.6.0](#260) | 2024/01/17  |
+| [oas/talq-api-cms-2-6-0.json](old-version.md)                              | [2.6.0](#260) | 2024/01/17  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-5-1.json](old-version.md)                           | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-gateway-2-5-1.json](old-version.md)                          | [2.5.1](#251) | 2023/06/02  |
+| [oas/talq-api-cms-2-5-1.json](old-version.md)                              | [2.5.1](#251) | 2023/06/02  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-5-0.json](old-version.md)                           | [2.5.0](#250) | 2023/01/05  |
+| [oas/talq-api-gateway-2-5-0.json](old-version.md)                          | [2.5.0](#250) | 2023/01/05  |
+| [oas/talq-api-cms-2-5-0.json](old-version.md)                              | [2.5.0](#250) | 2023/01/05  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-4-1.json](old-version.md)                           | [2.4.1](#241) | 2022/04/08  |
+| [oas/talq-api-gateway-2-4-1.json](old-version.md)                          | [2.4.1](#241) | 2022/04/08  |
+| [oas/talq-api-cms-2-4-1.json](old-version.md)                              | [2.4.1](#241) | 2022/04/08  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-4-0.json](old-version.md)                           | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-gateway-2-4-0.json](old-version.md)                          | [2.4.0](#240) | 2021/12/15  |
+| [oas/talq-api-cms-2-4-0.json](old-version.md)                              | [2.4.0](#240) | 2021/12/15  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-3-0.json](old-version.md)                           | [2.3.0](#230) | 2021/03/01  |
+| [oas/talq-api-gateway-2-3-0.json](old-version.md)                          | [2.3.0](#230) | 2021/03/01  |
+| [oas/talq-api-cms-2-3-0.json](old-version.md)                              | [2.3.0](#230) | 2021/03/01  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-2-0.json](old-version.md)                           | [2.2.0](#220) | 2020/04/01  |
+| [oas/talq-api-gateway-2-2-0.json](old-version.md)                          | [2.2.0](#220) | 2020/04/01  |
+| [oas/talq-api-cms-2-2-0.json](old-version.md)                              | [2.2.0](#220) | 2020/04/01  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-1-1.json](old-version.md)                           | 2.1.1         | 2019/10/01  |
+| [oas/talq-api-gateway-2-1-1.json](old-version.md)                          | 2.1.1         | 2019/10/01  |
+| [oas/talq-api-cms-2-1-1.json](old-version.md)                              | 2.1.1         | 2019/10/01  |
 
 # How to get in touch with TALQ
 
