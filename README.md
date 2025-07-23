@@ -37,7 +37,6 @@ All the released versions of the TALQ Specification are in the table below:
 | [oas/talq-data-model-2-6-3.json](oas/talq-data-model-2-6-3-online.json)    | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-gateway-2-6-3.json](oas/talq-api-gateway-2-6-3-online.json)  | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-cms-2-6-3.json](oas/talq-api-cms-2-6-3-online.json)          | [2.6.3](#263) | 2025/07/23  |
-
 | [oas/talq-data-model-2-6-2.json](oas/talq-data-model-2-6-2-online.json)    | [2.6.2](#262) | 2025/01/24  |
 | [oas/talq-api-gateway-2-6-2.json](oas/talq-api-gateway-2-6-2-online.json)  | [2.6.2](#262) | 2025/01/24  |
 | [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2-online.json)          | [2.6.2](#262) | 2025/01/24  |
