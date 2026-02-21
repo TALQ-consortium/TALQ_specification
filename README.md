@@ -23,10 +23,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20250723-TALQ-Specification-Approved-Version-2.6.3.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-6-3-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-6-3-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-6-3-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20260217-TALQ-Specification-Approved-Version-2.7.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-7-0-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-7-0-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-7-0-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -34,12 +34,17 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                       | Version       | Date        | 
 | -------------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-7-0.json](oas/talq-data-model-2-7-0-online.json)    | [2.7.0](#270) | 2026/02/21  |
+| [oas/talq-api-gateway-2-7-0.json](oas/talq-api-gateway-2-7-0-online.json)  | [2.7.0](#270) | 2026/02/21  |
+| [oas/talq-api-cms-2-7-0.json](oas/talq-api-cms-2-7-0-online.json)          | [2.7.0](#270) | 2026/02/21  |
+|                                                                            |               |             |
 | [oas/talq-data-model-2-6-3.json](oas/talq-data-model-2-6-3-online.json)    | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-gateway-2-6-3.json](oas/talq-api-gateway-2-6-3-online.json)  | [2.6.3](#263) | 2025/07/23  |
 | [oas/talq-api-cms-2-6-3.json](oas/talq-api-cms-2-6-3-online.json)          | [2.6.3](#263) | 2025/07/23  |
-| [oas/talq-data-model-2-6-2.json](oas/talq-data-model-2-6-2-online.json)    | [2.6.2](#262) | 2025/01/24  |
-| [oas/talq-api-gateway-2-6-2.json](oas/talq-api-gateway-2-6-2-online.json)  | [2.6.2](#262) | 2025/01/24  |
-| [oas/talq-api-cms-2-6-2.json](oas/talq-api-cms-2-6-2-online.json)          | [2.6.2](#262) | 2025/01/24  |
+|                                                                            |               |             |
+| [oas/talq-data-model-2-6-2.json](old-version.md)                           | [2.6.2](#262) | 2025/01/24  |
+| [oas/talq-api-gateway-2-6-2.json](old-version.md)                          | [2.6.2](#262) | 2025/01/24  |
+| [oas/talq-api-cms-2-6-2.json](old-version.md)                              | [2.6.2](#262) | 2025/01/24  |
 |                                                                            |               |             |
 | [oas/talq-data-model-2-6-1.json](old-version.md)                           | [2.6.1](#261) | 2024/06/27  |
 | [oas/talq-api-gateway-2-6-1.json](old-version.md)                          | [2.6.1](#261) | 2024/06/27  |
@@ -85,7 +90,141 @@ To stay up-to-date you can sign up for the TALQ Newsletter which is published ap
 
 # Release notes
 
-# Release notes
+## 2.7.0
+
+### At Data model
+
+- Make `BasicFunction` mandatory for Gateway for all profiles.
+- Make `LampActuatorFunction` & `LampMonitorFunction` mandatory for Lighting profile for GW & CMS.
+- Extend the TALQ Units with DALI new units, adding `TalqUnitEnum`.
+- Add `AttributeDaliUnit` object to be used by the DALI General Purpose Sensor.
+- Add `TalqQuantityEnum` as list of possible Quantity names
+- Add `AttributeDaliQuantity` object to be used by the DALI General Purpose Sensor.
+- Add `TalqOccupancyStateEnum` object to be used by the DALI Occupancy Sensor.
+- Add `AttributeOccupancyState` object to be used by the DALI Occupancy Sensor.
+- Add `ControlDeviceDaliPart103Function`, `ControlGearDaliPart102Function`, `DiagnosticsAndMaintenanceDataDaliPart253Function`, `EnergyDataDaliPart252Function`, `GeneralPurposeSensorDaliPart306InstanceFunction`, `LightSensorDaliPart304InstanceFunction`, `LuminaireDataDaliPart251Function`, `LuminaireMountedControlDeviceDaliPart351Function` and `OccupancySensorDaliPart303InstanceFunction`.
+- Add `ControlDeviceDaliPart103Type`, `ControlGearDaliPart102Type`,`DiagnosticsAndMaintenanceDataDaliPart253Type`,`EnergyDataDaliPart252Type`,`LuminaireDataDaliPart251Type` and `LuminaireMountedControlDeviceDaliPart351Type`.
+- Add `VendorEvent` to `FunctionDesc`.
+
+
+
+
+### At API for CMS:
+
+- Added resource control-gear-dali-part102-types with methods:
+    + **getControlGearDaliPart102Types**: Get the list of all control gear DALI part 102  types
+    + **addControlGearDaliPart102Types**: Add a list of new control gear DALI part 102  types
+    + **updateControlGearDaliPart102Types**: Update a list of existing control gear DALI part 102  types
+    + **getControlGearDaliPart102TypesCount**: Get the count of control gear DALI part 102  types
+    + **getControlGearDaliPart102Type**: Get a single control gear DALI part 102 Type by address
+    + **updateControlGearDaliPart102Type**: Update a single control gear DALI part 102  type by id
+    + **deleteControlGearDaliPart102Type**: Delete a single control gear DALI part 102  type
+
+- Added resource control-device-dali-part103-types with methods:
+    + **getControlDeviceDaliPart103Types**: Get the list of all control device DALI part 103  types
+    + **addControlDeviceDaliPart103Types**: Add a list of new control device DALI part 103  types
+    + **updateControlDeviceDaliPart103Types**: Update a list of existing control device DALI part 103  types
+    + **getControlDeviceDaliPart103TypesCount**: Get the count of control device DALI part 103  types
+    + **getControlDeviceDaliPart103Type**: Get a single control device DALI part 103 Type by address
+    + **updateControlDeviceDaliPart103Type**: Update a single control device DALI part 103  type by id
+    + **deleteControlDeviceDaliPart103Type**: Delete a single control device DALI part 103  type
+
+- Added resource luminaire-data-dali-part251-types with methods:
+    + **getLuminaireDataDaliPart251Types**: Get the list of all luminaire data DALI part 251  types
+    + **addLuminaireDataDaliPart251Types**: Add a list of new luminaire data DALI part 251  types
+    + **updateLuminaireDataDaliPart251Types**: Update a list of existing luminaire data DALI part 251  types
+    + **getLuminaireDataDaliPart251TypesCount**: Get the count of luminaire data DALI part 251  types
+    + **getLuminaireDataDaliPart251Type**: Get a single luminaire data DALI part 251 Type by address
+    + **updateLuminaireDataDaliPart251Type**: Update a single luminaire data DALI part 251  type by id
+    + **deleteLuminaireDataDaliPart251Type**: Delete a single luminaire data DALI part 251  type
+
+- Added resource energy-data-dali-part252-types with methods:
+    + **getEnergyDataDaliPart252Types**: Get the list of all energy data DALI part 252  types
+    + **addEnergyDataDaliPart252Types**: Add a list of new energy data DALI part 252  types
+    + **updateEnergyDataDaliPart252Types**: Update a list of existing energy data DALI part 252  types
+    + **getEnergyDataDaliPart252TypesCount**: Get the count of energy data DALI part 252  types
+    + **getEnergyDataDaliPart252Type**: Get a single energy data DALI part 252 Type by address
+    + **updateEnergyDataDaliPart252Type**: Update a single energy data DALI part 252  type by id
+    + **deleteEnergyDataDaliPart252Type**: Delete a single energy data DALI part 252  type
+
+- Added resource diagnostics-and-maintenance-data-dali-part253-types with methods:
+    + **getDiagnosticsAndMaintenanceDataDaliPart253Types**: Get the list of all diagnostics and maintenance data DALI part 253  types
+    + **addDiagnosticsAndMaintenanceDataDaliPart253Types**: Add a list of new diagnostics and maintenance data DALI part 253  types
+    + **updateDiagnosticsAndMaintenanceDataDaliPart253Types**: Update a list of existing diagnostics and maintenance data DALI part 253  types
+    + **getDiagnosticsAndMaintenanceDataDaliPart253TypesCount**: Get the count of diagnostics and maintenance data DALI part 253  types
+    + **getDiagnosticsAndMaintenanceDataDaliPart253Type**: Get a single diagnostics and maintenance data DALI part 253 Type by address
+    + **updateDiagnosticsAndMaintenanceDataDaliPart253Type**: Update a single diagnostics and maintenance data DALI part 253  type by id
+    + **deleteDiagnosticsAndMaintenanceDataDaliPart253Type**: Delete a single diagnostics and maintenance data DALI part 253  type
+
+
+- Added resource luminaire-data-dali-part251-types with methods:
+    + **getLuminaireMountedControlDeviceDaliPart351Types**: Get the list of all luminaire mounted control device DALI part 351 types
+    + **addLuminaireMountedControlDeviceDaliPart351Types**: Add a list of new luminaire mounted control device DALI part 351 types
+    + **updateLuminaireMountedControlDeviceDaliPart351Types**: Update a list of existing luminaire mounted control device DALI part 351 types
+    + **getLuminaireMountedControlDeviceDaliPart351TypesCount**: Get the count of luminaire mounted control device DALI part 351 types
+    + **getLuminaireMountedControlDeviceDaliPart351Type**: Get a single luminaire mounted control device DALI part 351 type by address
+    + **updateLuminaireMountedControlDeviceDaliPart351Type**: Update a single luminaire mounted control device DALI part 351 type by id
+    + **deleteLuminaireMountedControlDeviceDaliPart351Type**: Delete a single luminaire mounted control device DALI part 351 type
+
+
+### At API for Gateway
+
+- Clarify asynchronous assign command response in Gateway API when there are issues.
+- Added resource control-gear-dali-part102-types with methods:
+    + **getControlGearDaliPart102Types**: Get the list of all control gear DALI part 102  types
+    + **addControlGearDaliPart102Types**: Add a list of new control gear DALI part 102  types
+    + **updateControlGearDaliPart102Types**: Update a list of existing control gear DALI part 102  types
+    + **getControlGearDaliPart102TypesCount**: Get the count of control gear DALI part 102  types
+    + **getControlGearDaliPart102Type**: Get a single control gear DALI part 102 Type by address
+    + **updateControlGearDaliPart102Type**: Update a single control gear DALI part 102  type by id
+    + **deleteControlGearDaliPart102Type**: Delete a single control gear DALI part 102  type
+
+- Added resource control-device-dali-part103-types with methods:
+    + **getControlDeviceDaliPart103Types**: Get the list of all control device DALI part 103  types
+    + **addControlDeviceDaliPart103Types**: Add a list of new control device DALI part 103  types
+    + **updateControlDeviceDaliPart103Types**: Update a list of existing control device DALI part 103  types
+    + **getControlDeviceDaliPart103TypesCount**: Get the count of control device DALI part 103  types
+    + **getControlDeviceDaliPart103Type**: Get a single control device DALI part 103 Type by address
+    + **updateControlDeviceDaliPart103Type**: Update a single control device DALI part 103  type by id
+    + **deleteControlDeviceDaliPart103Type**: Delete a single control device DALI part 103  type
+
+- Added resource luminaire-data-dali-part251-types with methods:
+    + **getLuminaireDataDaliPart251Types**: Get the list of all luminaire data DALI part 251  types
+    + **addLuminaireDataDaliPart251Types**: Add a list of new luminaire data DALI part 251  types
+    + **updateLuminaireDataDaliPart251Types**: Update a list of existing luminaire data DALI part 251  types
+    + **getLuminaireDataDaliPart251TypesCount**: Get the count of luminaire data DALI part 251  types
+    + **getLuminaireDataDaliPart251Type**: Get a single luminaire data DALI part 251 Type by address
+    + **updateLuminaireDataDaliPart251Type**: Update a single luminaire data DALI part 251  type by id
+    + **deleteLuminaireDataDaliPart251Type**: Delete a single luminaire data DALI part 251  type
+
+- Added resource energy-data-dali-part252-types with methods:
+    + **getEnergyDataDaliPart252Types**: Get the list of all energy data DALI part 252  types
+    + **addEnergyDataDaliPart252Types**: Add a list of new energy data DALI part 252  types
+    + **updateEnergyDataDaliPart252Types**: Update a list of existing energy data DALI part 252  types
+    + **getEnergyDataDaliPart252TypesCount**: Get the count of energy data DALI part 252  types
+    + **getEnergyDataDaliPart252Type**: Get a single energy data DALI part 252 Type by address
+    + **updateEnergyDataDaliPart252Type**: Update a single energy data DALI part 252  type by id
+    + **deleteEnergyDataDaliPart252Type**: Delete a single energy data DALI part 252  type
+
+- Added resource diagnostics-and-maintenance-data-dali-part253-types with methods:
+    + **getDiagnosticsAndMaintenanceDataDaliPart253Types**: Get the list of all diagnostics and maintenance data DALI part 253  types
+    + **addDiagnosticsAndMaintenanceDataDaliPart253Types**: Add a list of new diagnostics and maintenance data DALI part 253  types
+    + **updateDiagnosticsAndMaintenanceDataDaliPart253Types**: Update a list of existing diagnostics and maintenance data DALI part 253  types
+    + **getDiagnosticsAndMaintenanceDataDaliPart253TypesCount**: Get the count of diagnostics and maintenance data DALI part 253  types
+    + **getDiagnosticsAndMaintenanceDataDaliPart253Type**: Get a single diagnostics and maintenance data DALI part 253 Type by address
+    + **updateDiagnosticsAndMaintenanceDataDaliPart253Type**: Update a single diagnostics and maintenance data DALI part 253  type by id
+    + **deleteDiagnosticsAndMaintenanceDataDaliPart253Type**: Delete a single diagnostics and maintenance data DALI part 253  type
+
+
+- Added resource luminaire-data-dali-part251-types with methods:
+    + **getLuminaireMountedControlDeviceDaliPart351Types**: Get the list of all luminaire mounted control device DALI part 351 types
+    + **addLuminaireMountedControlDeviceDaliPart351Types**: Add a list of new luminaire mounted control device DALI part 351 types
+    + **updateLuminaireMountedControlDeviceDaliPart351Types**: Update a list of existing luminaire mounted control device DALI part 351 types
+    + **getLuminaireMountedControlDeviceDaliPart351TypesCount**: Get the count of luminaire mounted control device DALI part 351 types
+    + **getLuminaireMountedControlDeviceDaliPart351Type**: Get a single luminaire mounted control device DALI part 351 type by address
+    + **updateLuminaireMountedControlDeviceDaliPart351Type**: Update a single luminaire mounted control device DALI part 351 type by id
+    + **deleteLuminaireMountedControlDeviceDaliPart351Type**: Delete a single luminaire mounted control device DALI part 351 type
+
 
 ## 2.6.3
 
