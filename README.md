@@ -23,10 +23,10 @@ The TALQ protocol has been defined with the [OpenAPI Specification (OAS), former
 
 The TALQ Specification is splitted in four files, named with the [Semantic versioning](#semantic-versioning):
 
-- [Approved TALQ Specification](20260217-TALQ-Specification-Approved-Version-2.7.0.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
-- [Data model OAS file](oas/talq-data-model-2-7-0-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
-- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-7-0-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
-- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-7-0-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
+- [Approved TALQ Specification](20260416-TALQ-Specification-Approved-Version-2.7.1.pdf): This document helps to understand the technical specifications of the TALQ Smart City Protocol.
+- [Data model OAS file](oas/talq-data-model-2-7-1-online.json): The data model defines all TALQ objects used in the protocol such as Devices, Calendars, Control Programs, etc.
+- [API for Outdoor Device Network (Gateway) OAS file](oas/talq-api-gateway-2-7-1-online.json): It defines the Gateway RESTful API with each resource, methods, parameters, etc.
+- [API for Central Management Software (CMS) OAS file](oas/talq-api-cms-2-7-1-online.json): It defines the CMS RESTful API with each resource, methods, parameters, etc.
 
 ## Versions
 
@@ -34,6 +34,10 @@ All the released versions of the TALQ Specification are in the table below:
 
 | Name                                                                       | Version       | Date        | 
 | -------------------------------------------------------------------------- | --------------| ----------- |
+| [oas/talq-data-model-2-7-1.json](oas/talq-data-model-2-7-1-online.json)    | [2.7.1](#271) | 2026/04/16  |
+| [oas/talq-api-gateway-2-7-1.json](oas/talq-api-gateway-2-7-1-online.json)  | [2.7.1](#271) | 2026/04/16  |
+| [oas/talq-api-cms-2-7-1.json](oas/talq-api-cms-2-7-1-online.json)          | [2.7.1](#271) | 2026/04/16  |
+|                                                                            |               |             |
 | [oas/talq-data-model-2-7-0.json](oas/talq-data-model-2-7-0-online.json)    | [2.7.0](#270) | 2026/02/21  |
 | [oas/talq-api-gateway-2-7-0.json](oas/talq-api-gateway-2-7-0-online.json)  | [2.7.0](#270) | 2026/02/21  |
 | [oas/talq-api-cms-2-7-0.json](oas/talq-api-cms-2-7-0-online.json)          | [2.7.0](#270) | 2026/02/21  |
@@ -89,6 +93,36 @@ Feel free to contact TALQ via the website [contact form](https://www.talq-consor
 To stay up-to-date you can sign up for the TALQ Newsletter which is published approx. three times a year.
 
 # Release notes
+
+## 2.7.1
+
+### At Data model
+
+- Remove duplicated eventTypes: `lampFailure` & `movementDetected`.
+- Definition of LampType properties `minLightOutput` & `virtualLightOutput` fixed: integer instead of object.
+- Fixed error in new DALI types: `name` attribute was required but not defined.
+- New DALI types added in the type of `TypeDesc`.
+- Fixing `"x-talq-unit"="None"` in attribute `ControlGearDaliPart102Function.actualLevel`.
+- Replaced `VoltAmpereHour` by `VoltAmpereHours` in some x-talq-unit.
+- Replaced `VoltAmpere` by `VoltAmperes` in some x-talq-unit.
+- Replaced `Ampere` by `Amperes` in some x-talq-unit.
+- Replaced `Second` by `Seconds` in some x-talq-unit.
+- Replaced `Lumen` by `Lumens` in some x-talq-unit.
+- Fix name: nominalLightOutput instead of nominalLIghtOutput.
+
+### At API for CMS:
+
+- Fixing `clientAddress` description and format in some methods (uuid format was missing).
+- Harmonize the methods & responses of the new DALI types with those of the existing types.
+- Adding uuid format in all `deviceAddress` parameters.
+
+
+### At API for Gateway
+
+- Fixing `clientAddress` description and format in some methods (uuid format was missing).
+- Harmonize the methods & responses of the new DALI types with those of the existing types.
+- Adding uuid format in all `deviceAddress` parameters.
+
 
 ## 2.7.0
 
